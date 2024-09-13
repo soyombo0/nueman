@@ -25,3 +25,9 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// Professors
+Route::get('professor', [\App\Http\Controllers\ProfessorController::class, 'show'])->name('professor.get');
+
+// Schools
+Route::get('/schools', [\App\Http\Controllers\SchoolController::class, 'index'])->name('school.index');

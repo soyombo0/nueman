@@ -1,9 +1,13 @@
 <script setup>
-
+defineProps({
+    professor: null
+})
 </script>
 
 <template>
-  $END$
+    <div class="bg-gray-50">
+        <p>{{ professor }}</p>
+    </div>
 </template>
 
 <style scoped>

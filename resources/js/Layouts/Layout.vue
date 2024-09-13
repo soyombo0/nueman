@@ -1,9 +1,10 @@
 <script setup>
-
+import Navbar from "@/Layouts/Navbar.vue";
 </script>
 
 <template>
-  $END$
+    <Navbar></Navbar>
+    <slot></slot>
 </template>
 
 <style scoped>
