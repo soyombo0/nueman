@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
+            $table->string('text')->nullable();
+            $table->float('rating');
+            $table->foreignId('professor_id');
             $table->timestamps();
         });
     }

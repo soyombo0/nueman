@@ -13,8 +13,14 @@ class SchoolSeeder extends Seeder
      */
     public function run(): void
     {
-        School::created([
-            'name' => 'MUIV'
+        School::query()->create([
+            'name' => 'ANUIS'
+        ]);
+        School::query()->create([
+            'name' => 'HZSTAN'
+        ]);
+        School::query()->create([
+            'name' => 'MUIS'
         ]);
     }
 }

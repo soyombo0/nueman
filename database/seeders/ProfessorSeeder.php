@@ -13,10 +13,20 @@ class ProfessorSeeder extends Seeder
      */
     public function run(): void
     {
-        Professor::created([
+        Professor::query()->create([
             'name' => 'Yale Ganberg',
             'department' => 'Finance',
             'school_id' => 1
+        ]);
+        Professor::query()->create([
+            'name' => 'Diana Smith',
+            'department' => 'Law',
+            'school_id' => 2
+        ]);
+        Professor::query()->create([
+            'name' => 'Ganzorig Boldbaatar',
+            'department' => 'Medicine',
+            'school_id' => 3
         ]);
     }
 }

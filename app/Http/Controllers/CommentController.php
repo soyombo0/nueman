@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
 use App\Models\Comment;
+use App\Models\Professor;
 
 class CommentController extends Controller
 {
@@ -29,7 +30,31 @@ class CommentController extends Controller
      */
     public function store(StoreCommentRequest $request)
     {
-        //
+        $data = $request->validated();
+        $professor = Professor::query()->find($data['professor']['id']);
+        $totalComments = 0;
+        $totalRating = 0;
+
+
+        if(count($professor->comments) == 0) {
+            $totalComments = 1;
+        } else {
+            $totalComments = count($professor->comments) + 1;
+            foreach ($professor->comments as $comment) {
+                $totalRating += intval($comment->rating);
+            }
+            $totalRating += $data['rating'];
+        }
+        $finalRating = floatval($totalRating / $totalComments);
+
+        $professor->grade = round($finalRating, 2);
+        $professor->save();
+
+        $comment = Comment::query()->create([
+            'text' => $data['text'],
+            'professor_id' => $professor->id,
+            'rating' => $data['rating']
+        ]);
     }
 
     /**

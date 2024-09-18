@@ -11,8 +11,8 @@ class Comment extends Model
 
     protected $guarded = ['id'];
 
-    public function professors()
+    public function professor()
     {
-        return $this->belongsToMany(Professor::class);
+        return $this->belongsTo(Professor::class);
     }
 }

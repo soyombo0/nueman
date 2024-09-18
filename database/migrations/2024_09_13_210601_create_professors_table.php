@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('professors', function (Blueprint $table) {
             $table->id();
             $table->string('img')->nullable();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('department');
-            $table->integer('grade')->default(0);
+            $table->float('grade')->default(0);
             $table->foreignId('school_id');
             $table->timestamps();
         });
