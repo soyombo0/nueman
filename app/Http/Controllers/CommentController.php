@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCommentRequest;
 use App\Http\Services\CommentService;
 use App\Models\Comment;
 use App\Models\Professor;
+use function Laravel\Prompts\error;
 
 class CommentController extends Controller
 {
@@ -37,7 +38,7 @@ class CommentController extends Controller
         $comment = $this->service->store($request);
 
         if($comment === false) {
-            return response()-
+            return error('contains inapproprirate language');
         }
     }
 
