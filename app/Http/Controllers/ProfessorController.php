@@ -52,6 +52,8 @@ class ProfessorController extends Controller
             'department' => $data['department'],
             'school_id' => 1
         ]);
+
+        return redirect(route('professor.index'));
     }
 
     /**
