@@ -14,7 +14,7 @@ defineProps({
     status: {
         type: String,
     },
-});
+    });
 
 const form = useForm({
     email: '',

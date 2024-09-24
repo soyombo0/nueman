@@ -5,6 +5,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+require __DIR__.'/auth.php';
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -12,11 +14,7 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->name('welcome');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -24,4 +22,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+
+// Professors
+Route::get('professor/{professor}', [\App\Http\Controllers\ProfessorController::class, 'show'])->name('professor.get');
+Route::get('professors', [\App\Http\Controllers\ProfessorController::class, 'index'])->name('professor.index');
+Route::middleware('auth')->group(function () {
+    Route::get('professors/add', [\App\Http\Controllers\ProfessorController::class, 'create'])->name('professor.create');
+    Route::post('professors', [\App\Http\Controllers\ProfessorController::class, 'store'])->name('professor.store');
+    Route::post('professor/comments', [\App\Http\Controllers\CommentController::class, 'store'])->name('comment.store');
+});
+
+// Comments
+Route::get('comments', [\App\Http\Controllers\CommentController::class, 'index'])->name('comments.index');
+
+// Schools
+Route::get('schools', [\App\Http\Controllers\SchoolController::class, 'index'])->name('school.index');
