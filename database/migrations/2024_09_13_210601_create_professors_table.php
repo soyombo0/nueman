@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('department');
             $table->float('grade')->default(0);
+            $table->float('difficulty')->default(0);
+            $table->float('again')->default(0);
             $table->foreignId('school_id');
             $table->timestamps();
         });

@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('text')->nullable();
             $table->float('rating');
+            $table->float('difficulty');
+            $table->boolean('again');
+            $table->integer('like')->default(0);
+            $table->integer('dislike')->default(0);
             $table->foreignId('professor_id');
             $table->timestamps();
         });

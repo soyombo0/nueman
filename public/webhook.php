@@ -1,58 +1,135 @@
 <?php
-//  $endpoint = "https://legacyonlineschool.bitrix24.com/rest/18/1wpof25pb33o3itf/crm.deal.get.json";
-//  $endpointUpdate = "https://legacyonlineschool.bitrix24.com/rest/18/1wpof25pb33o3itf/crm.deal.update.json";
-//
-//  // $dealId = $_REQUEST['data']['FIELDS']['ID'];
-//  $dealId = 35224;
-//  $params = array('ID' => $dealId);
-//  $url = $endpoint . '?' . http_build_query($params);
-//  $roistatField = null;
-//
-//  // Get deal
-//  $ch = curl_init();
-//  curl_setopt($ch, CURLOPT_URL, $url);
-//  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//
-// $resp = json_decode(curl_exec($ch));
-//
-// if($resp->result->UF_CRM_1710840971231 === 'EWEBINAR'  || $resp->result->UF_CRM_1710840971231 === 'ewebinar') {
-//     $roistatField = 'facebook1_' . $resp->result->UTM_CAMPAIGN;
-// }
-//  curl_close($ch);
-//
-//  // Update deal
-//  $chUpdate = curl_init();
-//  $paramsUpdate = array(
-//      'ID' => $dealId,
-//      'fields' => ['UF_CRM_1710840971231' => $roistatField],
-//  );
-//  $urlUpdate = $endpointUpdate . '?' . http_build_query($paramsUpdate);
-//
-//  curl_setopt($chUpdate, CURLOPT_URL, $urlUpdate);
-//  curl_setopt($chUpdate, CURLOPT_RETURNTRANSFER, true);
-//
-//  $respUpdate = curl_exec($chUpdate);
-//
-//  curl_close($chUpdate);
+//ini_set('display_errors', 0);
 
-$phone = '19952426628';
-$email = 'test224@test11.com';
-$form = 'testWebhook33';
-$name = 'testwebhook44';
-$key = 'NDViNzM1ODY1MGU4MDEzOWM4NGJlZjU1YTZmOTAzOGY6MjYwODYx';
+$managerPhone = $_POST['callee'];
+$caller = $_POST['caller'];
+$visitId = $_POST['visit_id'];
+$date = $_POST['date'];
+$landingPage = $_POST['landing_page'];
+$referrer = $_POST['referrer'];
+$marker = $_POST['marker'];
+$utmCampaign = $_POST['utm_campaign'];
+$utmMedium = $_POST['utm_medium'];
+$utmSource = $_POST['utm_source'];
+$utmTerm = $_POST['utm_term'];
+$utmContent = $_POST['utm_content'];
+$link = $_POST['link'];
+$duration = $_POST['duration'];
+$assigneeId = null;
 
-if (mb_strlen($phone) > 0 || mb_strlen($email) > 0 && isset($_COOKIE['roistat_visit']) ) {
-   $roistatData = array(
-       'roistat' => 'ewebinar',
-       'key' => $key,
-       'title' => $form,
-       'name' => $name,
-       'phone' => $phone,
-       'email' => $email,
-       'is_skip_sending' => '0',
-       'fields' => array(
-           'utm_campaign' => 'instagram'
-       ),
-   );
-   file_get_contents("https://cloud.roistat.com/api/proxy/1.0/leads/add?" . http_build_query($roistatData));
+switch ($managerPhone) {
+    case '79251035121':
+        $assigneeId = 640;
+        break;
+    case '79262097923':
+        $assigneeId = 4;
+        break;
+    case '79250077127':
+        $assigneeId = 9;
+        break;
+    case '79251702127':
+        $assigneeId = 566;
+        break;
 }
+
+$registerCallEndpoint = "https://bitrix.5-stars.org/rest/151/2amhtycf6hp51dyf/telephony.externalcall.register.json";
+$rCH = curl_init();
+
+$rParams = array(
+    'CRM_CREATE' => 1,
+    'USER_ID' => $assigneeId,
+    'TYPE' => 2,
+    'USER_PHONE_INNER' => $managerPhone,
+    'PHONE_NUMBER' => $caller,
+    'CALL_START_DATE' => $date,
+);
+$rUrl = $registerCallEndpoint . '?' . http_build_query($rParams);
+
+curl_setopt($rCH, CURLOPT_URL, $rUrl);
+curl_setopt($rCH, CURLOPT_RETURNTRANSFER, true);
+
+$rResponse = curl_exec($rCH);
+$jsonResponse = json_decode($rResponse);
+$callId = $jsonResponse->result->CALL_ID;
+$lead = $jsonResponse->result->CRM_CREATED_LEAD;
+$entityId = $jsonResponse->result->CRM_CREATED_ENTITIES[1]->ENTITY_ID;
+
+curl_close($rCH);
+
+// update deal
+if(isset($entityId)) {
+    $endpoint = "https://bitrix.5-stars.org/rest/151/by05msgbx9kiy6z7/crm.deal.update";
+    $ch = curl_init();
+
+    $paramsUpdate = array(
+        'ID' => $entityId,
+        'fields' => [
+            'TITLE' => 'Звонок от ' . $caller,
+            'UF_CRM_1720623033' => $visitId,
+            'ASSIGNED_BY_ID' => $assigneeId,
+            'STAGE_ID' => "NEW",
+            'BEGINDATE' => $date,
+            'UTM_CAMPAIGN' => $utmCampaign,
+            'UTM_SOURCE' => $utmSource,
+            'UTM_MEDIUM' => $utmMedium,
+            'UTM_CONTENT' => $utmContent,
+            'UTM_TERM' => $utmTerm,
+            'COMMENTS' => "
+            Страница захвата: {$landingPage}
+            Промокод: {$visitId}
+            Источник: {$marker}
+            Набранный номер: {$managerPhone}
+        "
+        ],
+    );
+    $url = $endpoint . '?' . http_build_query($paramsUpdate);
+
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $response = curl_exec($ch);
+
+    curl_close($ch);
+}
+
+// finish call
+$finishCallEndpoint = "https://bitrix.5-stars.org/rest/151/o4wbly1b06zw1dmz/telephony.externalcall.finish.json";
+
+$fCH = curl_init();
+
+$fParams = array(
+    'CALL_ID' => $callId,
+    'USER_ID' => $assigneeId,
+    'DURATION' => $duration
+);
+
+$fURL = $finishCallEndpoint . '?' . http_build_query($fParams);
+
+curl_setopt($fCH, CURLOPT_URL, $fURL);
+curl_setopt($fCH, CURLOPT_RETURNTRANSFER, true);
+
+curl_exec($fCH);
+
+curl_close($fCH);
+
+// attach record to a deal
+$attachEndpoint = "https://bitrix.5-stars.org/rest/151/by05msgbx9kiy6z7/telephony.externalcall.attachrecord.json";
+
+$aCH = curl_init();
+
+$aParams = array(
+    'CALL_ID' => $callId,
+    'FILENAME' => $date . '.mp3',
+    'RECORD_URL' => $link
+);
+
+$aUrl = $attachEndpoint . '?' . http_build_query($aParams);
+
+curl_setopt($aCH, CURLOPT_URL, $aUrl);
+curl_setopt($aCH, CURLOPT_RETURNTRANSFER, true);
+
+curl_exec($aCH);
+
+curl_close($aCH);
+
+

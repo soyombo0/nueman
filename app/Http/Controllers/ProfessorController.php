@@ -50,7 +50,7 @@ class ProfessorController extends Controller
         $professor = Professor::query()->create([
             'name' => $data['name'],
             'department' => $data['department'],
-            'school_id' => 1
+            'school_id' => 1,
         ]);
 
         return redirect(route('professor.index'));
@@ -70,6 +70,17 @@ class ProfessorController extends Controller
             'comments' => $comments
         ]);
     }
+
+    public function like(Request $request)
+    {
+
+    }
+
+    public function dislike(Request $request)
+    {
+
+    }
+
 
     /**
      * Show the form for editing the specified resource.
