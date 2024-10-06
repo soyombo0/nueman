@@ -7,6 +7,7 @@ const school = computed(() => page.props.school)
 const professor = computed(() => page.props.professor)
 const comments = computed(() => page.props.comments)
 const errors = computed(() => page.props.errors)
+const user = computed(() => page.props.auth.user)
 
 const form = useForm({
     text: null,
@@ -16,13 +17,21 @@ const form = useForm({
     again: 0,
 });
 
+const deleteForm = useForm({
+    comment: null
+});
+
 function submit() {
-    form.post('comments');
-    form.reset();
+    form.post('/comments', {
+        preserveScroll: true,
+        onSuccess: () => form.reset()
+    });
 }
 
 function deleteComment() {
-    form.delete('comments');
+    deleteForm.delete('/comments', {
+        preserveScroll: true,
+    });
 }
 </script>
 
@@ -96,18 +105,20 @@ function deleteComment() {
         <!-- Reviews Section -->
         <div class="mt-10">
             <h2 class="text-3xl font-semibold text-gray-800 mb-4">Reviews</h2>
-            <div v-for="comment in comments" class="space-y-3 mb-4 p-4 bg-gray-50 rounded-lg shadow">
+            <div v-for="comment in comments" class="flex flex-row justify-between space-y-3 mb-4 p-4 bg-gray-50 rounded-lg shadow">
                 <div class="flex-col gap-8">
-                    <p class="text-lg font-semibold">Grade: <span class="text-indigo-600">{{ comment.rating }}</span></p>
-                    <p class="text-lg font-semibold">Difficulty: <span class="text-indigo-600">{{ comment.difficulty }}</span></p>
+                    <p class="text-lg text-gray-600 font-semibold">Grade: <span class="text-black">{{ comment.rating }}</span></p>
+                    <p class="text-lg text-gray-600 font-semibold">Difficulty: <span class="text-black">{{ comment.difficulty }}</span></p>
                     <p v-if="comment.again" class="text-lg font-semibold">Would take again: <span  class="text-indigo-600">Yes</span></p>
-                    <p v-else class="text-lg font-semibold">Would take again: <span  class="text-indigo-600">No</span></p>
+                    <p v-else class="text-lg text-gray-600 font-semibold">Would take again: <span  class="text-black">No</span></p>
                     <p class="text-gray-700">Comment: {{ comment.text }}</p>
-                    <!--                <button v-if="$props.props.use === comment.user_id" class="bg-black text-white rounded-2xl p-2">Delete</button>-->
                 </div>
-                <div>
-
+                <form @submit.prevent="deleteForm.comment = comment; deleteComment();">
+                <div class="text-center flex flex-col gap-6">
+                    <p>{{ comment.created_at.substr(0, 10) }}</p>
+                    <button v-if="user.id === comment.user_id" type="submit" class="bg-black text-white rounded-2xl p-2">Delete</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>

@@ -19,7 +19,8 @@ return new class extends Migration
             $table->boolean('again');
             $table->integer('like')->default(0);
             $table->integer('dislike')->default(0);
-            $table->foreignId('professor_id');
+            $table->foreignId('professor_id')->constrained('professors')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

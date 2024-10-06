@@ -45,6 +45,7 @@ class CommentService
         return $comment = Comment::query()->create([
             'text' => $data['text'],
             'professor_id' => $professor->id,
+            'user_id' => auth()->user()->id,
             'rating' => $data['rating'],
             'again' => $data['again'],
             'difficulty' => $data['difficulty']

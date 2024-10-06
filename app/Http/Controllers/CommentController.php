@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteCommentRequest;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
 use App\Http\Services\CommentService;
@@ -17,22 +18,6 @@ class CommentController extends Controller
     {
     }
 
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreCommentRequest $request)
     {
         $comment = $this->service->store($request);
@@ -42,35 +27,23 @@ class CommentController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Comment $comment)
+
+    public function like(Request $request)
     {
-        //
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Comment $comment)
+    public function dislike(Request $request)
     {
-        //
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCommentRequest $request, Comment $comment)
+    public function destroy(DeleteCommentRequest $request)
     {
-        //
-    }
+        $data = $request->validated();
+        $commentId = $data['comment']['id'];
+        $comment = Comment::query()->find($commentId);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Comment $comment)
-    {
         $comment->delete();
     }
 }

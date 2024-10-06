@@ -15,12 +15,12 @@ class ProfessorController extends Controller
      */
     public function index(Request $request)
     {
-        $name = explode(' ', $request->name);
+        $name = explode(' ', trim($request->name));
 
         if($name[0] !== "") {
             foreach($name as $n) {
                 $professors = Professor::query()
-                    ->where('name', 'like', '%' . $n . '%')
+                    ->where('name', 'ilike', '%' . $n . '%')
                     ->get();
             }
         } else {
@@ -70,17 +70,6 @@ class ProfessorController extends Controller
             'comments' => $comments
         ]);
     }
-
-    public function like(Request $request)
-    {
-
-    }
-
-    public function dislike(Request $request)
-    {
-
-    }
-
 
     /**
      * Show the form for editing the specified resource.
