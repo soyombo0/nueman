@@ -15,7 +15,7 @@ class CommentService
     {
         $data = $request->validated();
         $professor = Professor::query()->find($data['professor']['id']);
-        $totalComments = 0;
+        $totalComments = count($professor->comments);
         $totalRating = 0;
 
         $banWordsCheck = $this->checkBanWords($data['text']);
@@ -24,20 +24,19 @@ class CommentService
             return false;
         }
 
-        if(count($professor->comments) == 0) {
+        if($totalComments == 0) {
             $totalComments = 1;
         } else {
             $totalComments = count($professor->comments) + 1;
             foreach ($professor->comments as $comment) {
                 $totalRating += intval($comment->rating);
             }
-            $totalRating += $data['rating'];
         }
+        $totalRating += $data['rating'];
+
         $finalRating = floatval($totalRating / $totalComments);
 
         $professor->grade = round($finalRating, 2);
-
-        $professor->again = 0;
         $professor->save();
 
         $this->countDiff(intval($data['difficulty']), $professor);
@@ -54,42 +53,42 @@ class CommentService
 
     private function countDiff(int $diff, Professor $professor)
     {
+        $comments = $professor->comments;
+        $commentsAmount = count($comments);
         $totalDiff = 0;
-        $totalComments = 0;
 
-        if(count($professor->comments) == 0) {
-            $totalComments = 1;
+        if ($commentsAmount == 0) {
+            $professor->difficulty = $diff;
+            $professor->save();
         } else {
-            $totalComments = count($professor->difficulty) + 1;
-            foreach ($professor->difficulty as $diff) {
-                $totalDiff += intval($diff->difficulty);
+            foreach ($comments as $comment) {
+                $totalDiff += $comment->difficulty;
             }
             $totalDiff += $diff;
+            $commentsAmount += 1;
+            $professor->difficulty = $totalDiff/$commentsAmount;
+            $professor->save();
         }
-
-        $finalDiff = floatval($totalDiff / $totalComments);
-        $professor->difficulty = $finalDiff;
-        $professor->save();
     }
 
     private function countAgain(bool $again, Professor $professor)
     {
+        $comments = $professor->comments;
+        $commentsAmount = count($comments);
         $totalAgain = 0;
-        $totalComments = 0;
 
-        if(count($professor->comments) == 0) {
-            $totalComments = 1;
+        if ($commentsAmount == 0) {
+            $professor->again = $again;
+            $professor->save();
         } else {
-            $totalComments = count($professor->again) + 1;
-            foreach ($professor->again as $diff) {
-                $totalAgain += intval($diff->again);
+            foreach ($comments as $comment) {
+                $totalAgain += $comment->difficulty;
             }
             $totalAgain += $again;
+            $commentsAmount += 1;
+            $professor->again = $totalAgain / $commentsAmount;
+            $professor->save();
         }
-
-        $finalAgain = floatval($totalAgain / $totalComments);
-        $professor->again = $finalAgain;
-        $professor->save();
     }
 
     private function checkBanWords(string $text)

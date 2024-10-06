@@ -6,6 +6,8 @@ const page = usePage()
 const school = computed(() => page.props.school)
 const professor = computed(() => page.props.professor)
 const comments = computed(() => page.props.comments)
+const errors = computed(() => page.props.errors)
+
 const form = useForm({
     text: null,
     rating: null,
@@ -16,6 +18,11 @@ const form = useForm({
 
 function submit() {
     form.post('comments');
+    form.reset();
+}
+
+function deleteComment() {
+    form.delete('comments');
 }
 </script>
 
@@ -42,13 +49,14 @@ function submit() {
                 <div class="grid grid-cols-2">
                     <form class="max-w-sm">
                         <label for="countries" class="block mb-2 text-md font-medium">Grade</label>
-                        <select v-model="form.rating" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <select selected="1" v-model="form.rating" id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="5">5</option>
                             <option value="4">4</option>
                             <option value="3">3</option>
                             <option value="2">2</option>
-                            <option value="1">1</option>
+                            <option selected="selected" value="1">1</option>
                         </select>
+                        <label v-if="errors" class="text-center text-red-500">{{ errors.rating }}</label>
                     </form>
 
                     <form class="max-w-sm">
@@ -60,6 +68,7 @@ function submit() {
                             <option value="2">2</option>
                             <option value="1">1</option>
                         </select>
+                        <label v-if="errors" class="text-center text-red-500">{{ errors.difficulty }}</label>
                     </form>
                 </div>
                 <!-- Comment Section -->
@@ -71,6 +80,7 @@ function submit() {
                         class="w-full p-3 h-32 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                         placeholder="Write your review here..."
                     ></textarea>
+                    <label v-if="errors" class="text-center text-red-500">{{ errors.text }}</label>
                 </div>
 
                 <!-- Submit Button -->
@@ -87,11 +97,17 @@ function submit() {
         <div class="mt-10">
             <h2 class="text-3xl font-semibold text-gray-800 mb-4">Reviews</h2>
             <div v-for="comment in comments" class="space-y-3 mb-4 p-4 bg-gray-50 rounded-lg shadow">
-                <p class="text-lg font-semibold">Grade: <span class="text-indigo-600">{{ comment.rating }}</span></p>
-                <p class="text-lg font-semibold">Difficulty: <span class="text-indigo-600">{{ comment.difficulty }}</span></p>
-                <p v-if="comment.again" class="text-lg font-semibold">Would take again: <span  class="text-indigo-600">Yes</span></p>
-                <p v-else class="text-lg font-semibold">Would take again: <span  class="text-indigo-600">No</span></p>
-                <p class="text-gray-700">Comment: {{ comment.text }}</p>
+                <div class="flex-col gap-8">
+                    <p class="text-lg font-semibold">Grade: <span class="text-indigo-600">{{ comment.rating }}</span></p>
+                    <p class="text-lg font-semibold">Difficulty: <span class="text-indigo-600">{{ comment.difficulty }}</span></p>
+                    <p v-if="comment.again" class="text-lg font-semibold">Would take again: <span  class="text-indigo-600">Yes</span></p>
+                    <p v-else class="text-lg font-semibold">Would take again: <span  class="text-indigo-600">No</span></p>
+                    <p class="text-gray-700">Comment: {{ comment.text }}</p>
+                    <!--                <button v-if="$props.props.use === comment.user_id" class="bg-black text-white rounded-2xl p-2">Delete</button>-->
+                </div>
+                <div>
+
+                </div>
             </div>
         </div>
     </div>

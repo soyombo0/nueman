@@ -9,13 +9,13 @@ const professors = computed(() => page.props.professors)
 
 <template >
     <div v-if="professors[0]" class="text-center">
-        <p class="text-center text-6xl font-bold">Professors</p>
+        <p class="text-center text-6xl font-bold">Профессорууд</p>
         <Search></Search>
         <div class="flex mt-12 justify-center">
             <table class="text-xl">
                 <tr class="">
-                    <th>Professor</th>
-                    <th>Department</th>
+                    <th>Профессох</th>
+                    <th>Тэнхим</th>
                 </tr>
                 <tr v-for="professor in professors" class="text-center">
                     <td>
