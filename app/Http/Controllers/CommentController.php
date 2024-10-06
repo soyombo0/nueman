@@ -2,90 +2,48 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteCommentRequest;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
+use App\Http\Services\CommentService;
 use App\Models\Comment;
 use App\Models\Professor;
+use function Laravel\Prompts\error;
 
 class CommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct(
+        protected CommentService $service
+    )
     {
-        //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreCommentRequest $request)
     {
-        $data = $request->validated();
-        $professor = Professor::query()->find($data['professor']['id']);
-        $totalComments = 0;
-        $totalRating = 0;
+        $comment = $this->service->store($request);
 
-
-        if(count($professor->comments) == 0) {
-            $totalComments = 1;
-        } else {
-            $totalComments = count($professor->comments) + 1;
-            foreach ($professor->comments as $comment) {
-                $totalRating += intval($comment->rating);
-            }
-            $totalRating += $data['rating'];
+        if($comment === false) {
+            return error('contains inapproprirate language');
         }
-        $finalRating = floatval($totalRating / $totalComments);
-
-        $professor->grade = round($finalRating, 2);
-        $professor->save();
-
-        $comment = Comment::query()->create([
-            'text' => $data['text'],
-            'professor_id' => $professor->id,
-            'rating' => $data['rating']
-        ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Comment $comment)
+
+    public function like(Request $request)
     {
-        //
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Comment $comment)
+    public function dislike(Request $request)
     {
-        //
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCommentRequest $request, Comment $comment)
+    public function destroy(DeleteCommentRequest $request)
     {
-        //
-    }
+        $data = $request->validated();
+        $commentId = $data['comment']['id'];
+        $comment = Comment::query()->find($commentId);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Comment $comment)
-    {
-        //
+        $comment->delete();
     }
 }

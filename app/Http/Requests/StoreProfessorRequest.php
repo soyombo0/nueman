@@ -10,7 +10,7 @@ class StoreProfessorRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:30'],
-            'department' => ['required', 'string', 'max:30']
+            'department' => ['required', 'string', 'max:30'],
         ];
     }
 }

@@ -12,9 +12,9 @@ function submit() {
 
 <template>
     <form @submit.prevent="submit">
-        <input v-model="form.name" name="professor" class="rounded-3xl border mt-6 mb-3 px-12 text-2xl" placeholder="Professor's name">
+        <input v-model="form.name" name="professor" class="rounded-3xl border mt-6 mb-3 px-12 text-2xl" placeholder="Профессорын нэр">
     </form>
-    <Link href="/professors/add" class="text-black/50 hover:text-black/70">Didn't find your professor? Add one</Link>
+    <Link href="/professors/add" class="text-black/50 hover:text-black/70">Профессороо олсонгүй юу? Профессор нэмэх</Link>
 </template>
 
 <style scoped>

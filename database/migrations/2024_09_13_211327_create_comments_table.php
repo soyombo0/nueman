@@ -15,7 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('text')->nullable();
             $table->float('rating');
-            $table->foreignId('professor_id');
+            $table->float('difficulty');
+            $table->boolean('again');
+            $table->integer('like')->default(0);
+            $table->integer('dislike')->default(0);
+            $table->foreignId('professor_id')->constrained('professors')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

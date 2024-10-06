@@ -1,0 +1,212 @@
+
+------------------------
+2024.09.19 14:58:40
+incoming
+{"error":"INVALID_CREDENTIALS","error_description":"Invalid request credentials"}
+------------------------
+
+------------------------
+2024.09.19 14:58:40
+incoming
+35062
+------------------------
+
+------------------------
+2024.09.19 15:00:00
+incoming
+{"error":"INVALID_CREDENTIALS","error_description":"Invalid request credentials"}
+------------------------
+
+------------------------
+2024.09.19 15:00:00
+incoming
+35064
+------------------------
+
+------------------------
+2024.09.23 11:48:45
+inbound
+stdClass Object
+(
+    [error] => INVALID_CREDENTIALS
+    [error_description] => Invalid request credentials
+)
+
+------------------------
+
+------------------------
+2024.09.23 11:48:46
+inbound
+{"error":"INVALID_CREDENTIALS","error_description":"Invalid request credentials"}
+------------------------
+
+------------------------
+2024.09.23 11:49:39
+inbound
+stdClass Object
+(
+    [error] => INVALID_CREDENTIALS
+    [error_description] => Invalid request credentials
+)
+
+------------------------
+
+------------------------
+2024.09.23 11:49:39
+inbound
+{"error":"INVALID_CREDENTIALS","error_description":"Invalid request credentials"}
+------------------------
+
+------------------------
+2024.09.23 11:49:45
+inbound
+stdClass Object
+(
+    [error] => INVALID_CREDENTIALS
+    [error_description] => Invalid request credentials
+)
+
+------------------------
+
+------------------------
+2024.09.23 11:49:45
+inbound
+{"error":"INVALID_CREDENTIALS","error_description":"Invalid request credentials"}
+------------------------
+
+------------------------
+2024.09.23 11:50:36
+inbound
+stdClass Object
+(
+    [error] => INVALID_CREDENTIALS
+    [error_description] => Invalid request credentials
+)
+
+------------------------
+
+------------------------
+2024.09.23 11:50:36
+inbound
+{"error":"INVALID_CREDENTIALS","error_description":"Invalid request credentials"}
+------------------------
+
+------------------------
+2024.09.23 11:52:21
+inbound
+stdClass Object
+(
+    [result] => stdClass Object
+        (
+            [ID] => 35222
+            [TITLE] => test Webhook3
+            [TYPE_ID] => 
+            [STAGE_ID] => NEW
+            [PROBABILITY] => 
+            [CURRENCY_ID] => USD
+            [OPPORTUNITY] => 
+            [IS_MANUAL_OPPORTUNITY] => N
+            [TAX_VALUE] => 
+            [LEAD_ID] => 
+            [COMPANY_ID] => 0
+            [CONTACT_ID] => 29518
+            [QUOTE_ID] => 
+            [BEGINDATE] => 2024-09-23T03:00:00+03:00
+            [CLOSEDATE] => 
+            [ASSIGNED_BY_ID] => 1
+            [CREATED_BY_ID] => 1
+            [MODIFY_BY_ID] => 1
+            [DATE_CREATE] => 2024-09-23T14:46:07+03:00
+            [DATE_MODIFY] => 2024-09-23T14:46:07+03:00
+            [OPENED] => N
+            [CLOSED] => N
+            [COMMENTS] => 
+            [ADDITIONAL_INFO] => 
+            [LOCATION_ID] => 
+            [CATEGORY_ID] => 0
+            [STAGE_SEMANTIC_ID] => P
+            [IS_NEW] => Y
+            [IS_RECURRING] => N
+            [IS_RETURN_CUSTOMER] => N
+            [IS_REPEATED_APPROACH] => N
+            [SOURCE_ID] => 
+            [SOURCE_DESCRIPTION] => 
+            [ORIGINATOR_ID] => 
+            [ORIGIN_ID] => 
+            [MOVED_BY_ID] => 1
+            [MOVED_TIME] => 2024-09-23T14:46:07+03:00
+            [LAST_ACTIVITY_TIME] => 2024-09-23T14:46:07+03:00
+            [UTM_SOURCE] => 
+            [UTM_MEDIUM] => 
+            [UTM_CAMPAIGN] => instagram
+            [UTM_CONTENT] => 
+            [UTM_TERM] => 
+            [LAST_ACTIVITY_BY] => 1
+            [UF_CRM_64C964C9E36A5] => 
+            [UF_CRM_64C964CA05E4A] => 
+            [UF_CRM_64C964CA10189] => 
+            [UF_CRM_64C964CA199B8] => 
+            [UF_CRM_64C964CA243C4] => 
+            [UF_CRM_GA_CID] => 
+            [UF_CRM_1693386539938] => 
+            [UF_CRM_1694095709795] => 
+            [UF_CRM_1700213926] => 
+            [UF_CRM_1701963106] => 
+            [UF_CRM_1701963116] => 
+            [UF_CRM_1701963127] => 
+            [UF_CRM_1705264770] => 
+            [UF_CRM_1710324483] => 
+            [UF_CRM_1710840971231] => ewebinar
+            [UF_CRM_1712243619992] => 
+            [UF_CRM_1712752242] => 
+            [UF_CRM_1714052941060] => 
+            [UF_CRM_1714053003639] => 0
+            [UF_CRM_1714053143658] => 
+            [UF_CRM_1714053216160] => 
+            [UF_CRM_1714053250427] => 
+            [UF_CRM_1714053310294] => 
+            [UF_CRM_1714053463445] => 
+            [UF_CRM_1714053511995] => 
+            [UF_CRM_1714053549577] => 
+            [UF_CRM_1714053761093] => 
+            [UF_CRM_1714053829798] => 
+            [UF_CRM_1714053857716] => 
+            [UF_CRM_1714053885184] => 
+            [UF_CRM_1714053962065] => 
+            [UF_CRM_1714053985863] => 
+            [UF_CRM_1714054022913] => 
+            [UF_CRM_1714054085515] => 
+            [UF_CRM_1714054115430] => 
+            [UF_CRM_1714054136163] => 
+            [UF_CRM_1714054153915] => 
+            [UF_CRM_1714054170564] => 
+            [UF_CRM_1714054228596] => 
+            [UF_CRM_1714054737898] => 
+            [UF_CRM_1714055366561] => 
+            [UF_CRM_1714055912437] => 
+            [UF_CRM_1714055941821] => 
+            [UF_CRM_1714070812603] => 
+            [UF_CRM_1723754823607] => 
+        )
+
+    [time] => stdClass Object
+        (
+            [start] => 1727092340.9468
+            [finish] => 1727092340.991
+            [duration] => 0.044209957122803
+            [processing] => 0.022904872894287
+            [date_start] => 2024-09-23T14:52:20+03:00
+            [date_finish] => 2024-09-23T14:52:20+03:00
+            [operating_reset_at] => 1727092940
+            [operating] => 0
+        )
+
+)
+
+------------------------
+
+------------------------
+2024.09.23 11:52:21
+inbound
+{"result":true,"time":{"start":1727092341.397692,"finish":1727092341.5842371,"duration":0.18654513359069824,"processing":0.1696169376373291,"date_start":"2024-09-23T14:52:21+03:00","date_finish":"2024-09-23T14:52:21+03:00","operating_reset_at":1727092941,"operating":0.16960287094116211}}
+------------------------

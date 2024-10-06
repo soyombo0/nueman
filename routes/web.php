@@ -29,11 +29,14 @@ Route::get('professors', [\App\Http\Controllers\ProfessorController::class, 'ind
 Route::middleware('auth')->group(function () {
     Route::get('professors/add', [\App\Http\Controllers\ProfessorController::class, 'create'])->name('professor.create');
     Route::post('professors', [\App\Http\Controllers\ProfessorController::class, 'store'])->name('professor.store');
-    Route::post('professor/comments', [\App\Http\Controllers\CommentController::class, 'store'])->name('comment.store');
+
+    // Comments
+    Route::get('comments', [\App\Http\Controllers\CommentController::class, 'index'])->name('comments.index');
+    Route::post('comments', [\App\Http\Controllers\CommentController::class, 'store'])->name('comment.store');
+    Route::delete('comments', [\App\Http\Controllers\CommentController::class, 'destroy'])->name('comments.delete');
 });
 
-// Comments
-Route::get('comments', [\App\Http\Controllers\CommentController::class, 'index'])->name('comments.index');
+
 
 // Schools
 Route::get('schools', [\App\Http\Controllers\SchoolController::class, 'index'])->name('school.index');

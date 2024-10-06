@@ -11,7 +11,9 @@ class StoreCommentRequest extends FormRequest
         return [
             'text' => ['string'],
             'rating' => ['required', 'integer'],
-            'professor' => ['required']
+            'professor' => ['required'],
+            'difficulty' => ['required'],
+            'again' => ['required'],
         ];
     }
 }

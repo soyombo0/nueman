@@ -15,12 +15,12 @@ class ProfessorController extends Controller
      */
     public function index(Request $request)
     {
-        $name = explode(' ', $request->name);
+        $name = explode(' ', trim($request->name));
 
         if($name[0] !== "") {
             foreach($name as $n) {
                 $professors = Professor::query()
-                    ->where('name', 'like', '%' . $n . '%')
+                    ->where('name', 'ilike', '%' . $n . '%')
                     ->get();
             }
         } else {
@@ -50,8 +50,10 @@ class ProfessorController extends Controller
         $professor = Professor::query()->create([
             'name' => $data['name'],
             'department' => $data['department'],
-            'school_id' => 1
+            'school_id' => 1,
         ]);
+
+        return redirect(route('professor.index'));
     }
 
     /**
