@@ -10,11 +10,13 @@ import Dropdown from "@/Components/Dropdown.vue";
             <div class="flex gap-3">
                 <Link class="flex gap-2" href="/">
                     <box-icon name='book-alt' ></box-icon>
-                    <p>nueman</p>
+                    <p>bichig</p>
                 </Link>
                 <p>|</p>
                 <Link href="/professors" class="hover:text-black/60">professors</Link>
-<!--                <Link href="/schools" class="hover:text-black/60">schools</Link>-->
+                <p>|</p>
+                <Link href="/contacts" class="hover:text-black/60">contacts</Link>
+                <!--                <Link href="/schools" class="hover:text-black/60">schools</Link>-->
             </div>
             <div v-if="$page.props.auth.user">
                 <Dropdown align="right" width="48">
@@ -52,6 +54,7 @@ import Dropdown from "@/Components/Dropdown.vue";
             </div>
 
             <div v-else>
+
                 <Link
                     :href="route('login')"
                     class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/60 focus:outline-none "

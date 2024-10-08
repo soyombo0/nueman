@@ -9,6 +9,8 @@ const comments = computed(() => page.props.comments)
 const errors = computed(() => page.props.errors)
 const user = computed(() => page.props.auth.user)
 
+const userId = user.id;
+
 const form = useForm({
     text: null,
     rating: null,
@@ -116,7 +118,7 @@ function deleteComment() {
                 <form @submit.prevent="deleteForm.comment = comment; deleteComment();">
                 <div class="text-center flex flex-col gap-6">
                     <p>{{ comment.created_at.substr(0, 10) }}</p>
-                    <button v-if="user.id === comment.user_id" type="submit" class="bg-black text-white rounded-2xl p-2">Delete</button>
+                    <button v-if="userId === comment.user_id" type="submit" class="bg-black text-white rounded-2xl p-2">Delete</button>
                 </div>
                 </form>
             </div>
