@@ -36,7 +36,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('comments', [\App\Http\Controllers\CommentController::class, 'destroy'])->name('comments.delete');
 });
 
+Route::get('contacts', function () {
 
+    return Inertia('Contacts');
+});
 
 // Schools
 Route::get('schools', [\App\Http\Controllers\SchoolController::class, 'index'])->name('school.index');
